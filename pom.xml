@@ -17,6 +17,7 @@
     <name>iCompany</name>
 
     <properties>
+        <final.name>iCompany</final.name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jee.version>7.0</jee.version>
         <spring.version>4.1.6.RELEASE</spring.version>
@@ -30,6 +31,7 @@
         <omnifaces.version>1.10</omnifaces.version>
         <commons.lang.version>3.4</commons.lang.version>
         <org.slf4j-version>1.7.5</org.slf4j-version>
+        <wildfly.plugin.version>1.0.2.Final</wildfly.plugin.version>
     </properties>
 
 
@@ -112,6 +114,11 @@
              <!--Spring Security dependencies-->
             <dependency>
                 <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-web</artifactId>
                 <version>${spring.security.version}</version>
             </dependency>
@@ -188,6 +195,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
 </project>

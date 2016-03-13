@@ -9,7 +9,7 @@
 
     <!-- Welcome page -->
     <welcome-file-list>
-        <welcome-file>pages/helloWorld.xhtml</welcome-file>
+        <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
 
     <!--Bootrstrap Theme-->

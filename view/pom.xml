@@ -20,6 +20,10 @@
         </repository>
     </repositories>
 
+    <properties>
+        <maven.build.time>${maven.build.timestamp}</maven.build.time>
+    </properties>
+
     <dependencies>
         <!--Project dependency-->
         <dependency>
@@ -35,6 +39,20 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <!--Spring Security dependencies-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
         </dependency>
 
         <!--Servlet dependencies-->
@@ -69,5 +87,37 @@
             <artifactId>omnifaces</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>${final.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${wildfly.plugin.version}</version>
+                <configuration>
+                    <hostname>51.254.124.121</hostname>
+                    <port>9990</port>
+                    <username>iCompanyDeployer</username>
+                    <password>Tru$tDepl0yer</password>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>${basedir}/target/iCompany/pages/templates/</directory>
+                <targetPath>${basedir}/target/iCompany/</targetPath>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 
 </project>

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:spring="http://www.springframework.org/tags"
         >
 <body>
 <ui:composition>
@@ -11,6 +11,8 @@
             <div class="span8 footerdfi">
                 <p>
                     Projekt Open Source iCompany
+                    <br/>
+                    Build: <spring:message code="build.time"/>
                 </p>
             </div>
             <div class="span3 footerdfi">
