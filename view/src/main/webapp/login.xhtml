@@ -10,6 +10,7 @@
     </ui:define>
     <ui:define name="content">
         <h:form prependId="false">
+            <h:outputScript library="js" name="security.js"/>
             <p:growl id="growl" life="4000" severity="error"/>
 
             <div class="span7">
@@ -21,7 +22,6 @@
                     <h:outputText for="j_password" value="Hasło: " style="float:right;"/>
                     <p:password id="j_password" style="margin-bottom: 0px;" required="true"
                                 requiredMessage="Proszę podać hasło"/>
-                    <h:outputText for="j_password" value="" style="float:right;"/>
                     <p:commandButton id="loginButtonId" actionListener="#{loginListener.doLogin}"
                                      styleClass="btn-success" value="Zaloguj" ajax="false" type="submit"/>
                 </h:panelGrid>
