@@ -1,4 +1,4 @@
-package configuration;
+package com.iCompany.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

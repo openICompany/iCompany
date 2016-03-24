@@ -2,14 +2,14 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-                template="/pages/templates/template.xhtml">
+                template="/templates/template.xhtml">
 
     <ui:param name="title" value="Strona główna"/>
 
     <ui:define name="content">
         <h:form id="mainPageForm" styleClass="span11">
             <h2>#{helloWorldBean.testString}</h2>
-            <p:commandButton value="TEST!!!" actionListener="#{helloWorldBean.testDB}"/>
+            <p:commandButton value="TEST!!!" actionListener="#{testController.testDB}"/>
         </h:form>
     </ui:define>
 
