@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+                template="/pages/templates/template.xhtml">
+
+    <ui:param name="title" value="Ustawienia"/>
+
+    <ui:define name="content">
+        <h:form id="mainPageForm" styleClass="span11">
+            <h2>Twoje dane:</h2>
+            <div>
+                <div id="userInfo">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="userName">Imie: </h:outputLabel>
+                        <h:inputText id="userName" value="Imie"/>
+
+                        <h:outputLabel for="userSurname">Nazwisko: </h:outputLabel>
+                        <h:inputText id="userSurname" value="Nazwisko"/>
+
+                        <h:outputLabel for="userEmail">Adres email: </h:outputLabel>
+                        <h:inputText id="userEmail" value="NIP"/>
+
+                        <h:outputLabel for="userPassword">Hasło: </h:outputLabel>
+                        <h:inputText id="userPassword" value="KRS"/>
+
+                    </h:panelGrid>
+                </div>
+                <div id="companyInfo" style="float: left; margin-left: 10px;">
+                    <h3>Podstawowe informacje</h3>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="companyName">Nazwa firmy: </h:outputLabel>
+                        <h:inputText id="companyName" value="Company Name"/>
+
+                        <h:outputLabel for="REGON">REGON: </h:outputLabel>
+                        <h:inputText id="REGON" value="REGON"/>
+
+                        <h:outputLabel for="NIP">NIP: </h:outputLabel>
+                        <h:inputText id="NIP" value="NIP"/>
+
+                        <h:outputLabel for="KRS">KRS: </h:outputLabel>
+                        <h:inputText id="KRS" value="KRS"/>
+
+                        <h:outputLabel for="BANK_NAME">Nazwa banku: </h:outputLabel>
+                        <h:inputText id="BANK_NAME" value="Nazwa banku"/>
+
+                        <h:outputLabel for="BANK_ACCOUNT_NUMBER">Numer konta bankowego: </h:outputLabel>
+                        <h:inputText id="BANK_ACCOUNT_NUMBER" value="Numer konta bankowego"/>
+
+                        <h:outputLabel for="REPRESENTATIVE">Przedstawiciel: </h:outputLabel>
+                        <h:inputText id="REPRESENTATIVE" value="Przedstawiciel"/>
+                    </h:panelGrid>
+                </div>
+                <div style="float: left; margin-left: 10px;">
+                    <h3>Adres firmy</h3>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="STREET">Ulica: </h:outputLabel>
+                        <h:inputText id="STREET" value="Street"/>
+
+                        <h:outputLabel for="BUILDING_NUMBER">Numer budynku: </h:outputLabel>
+                        <h:inputText id="BUILDING_NUMBER" value="Building number"/>
+
+                        <h:outputLabel for="FLAT_MANE">Numer mieszkania: </h:outputLabel>
+                        <h:inputText id="FLAT_MANE" value="Flat number"/>
+
+                        <h:outputLabel for="POST_CODE">Kod pocztowy: </h:outputLabel>
+                        <h:inputText id="POST_CODE" value="Post code"/>
+
+                        <h:outputLabel for="CITY">Miasto: </h:outputLabel>
+                        <h:inputText id="CITY" value="City"/>
+
+                        <h:outputLabel for="PROVINCE">Województwo: </h:outputLabel>
+                        <h:inputText id="PROVINCE" value="Province"/>
+                    </h:panelGrid>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

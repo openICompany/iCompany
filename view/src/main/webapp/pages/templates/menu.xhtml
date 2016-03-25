@@ -11,8 +11,13 @@
         <div class="menu">
             <ul>
                 <li>
-                    <p:commandLink ajax="false">
+                    <p:commandLink action="/pages/helloWorld?faces-redirect=true" ajax="false">
                         <h:outputText value="Strona główna"/>
+                    </p:commandLink>
+                </li>
+                <li>
+                    <p:commandLink action="/pages/userCustomization?faces-redirect=true" ajax="false">
+                        <h:outputText value="User customization"/>
                     </p:commandLink>
                 </li>
                 <li>
