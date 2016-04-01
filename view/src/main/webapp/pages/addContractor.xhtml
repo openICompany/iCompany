@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:param name="title" value="Strona główna"/>
+
+    <ui:define name="content">
+        <h:form id="grid">
+            <p:panel header="Wybór firmy dla której ma być dodany nowy kontrahent">
+                <h:panelGrid columns="8" cellpadding="5">
+                    <p:outputLabel for="company" value="Firma: "/>
+                    <p:selectOneMenu id="company" value="#{addContractorBean.company}" style="width:150px"
+                                     required="true" requiredMessage="Wybierz firmę z listy">
+                        <f:selectItem itemLabel="Wybierz firmę" itemValue="#{null}"/>
+                        <f:selectItems value="#{addContractorBean.companies}"/>
+                    </p:selectOneMenu>
+                    <p:message for="company"/>
+                </h:panelGrid>
+            </p:panel>
+
+            <p:panel header="Nowy kontrahent">
+                <h:panelGrid columns="6" cellpadding="5">
+                    <h:outputLabel for="name" value="Nazwa kontrahenta:" style="font-weight:bold"/>
+                    <p:inputText id="name" value="#{addContractorBean.contractorName}" required="true"
+                                 label="Nazwa kontrahenta" requiredMessage="Pole wymagane!"/>
+                    <p:message for="name" />
+
+                    <h:outputLabel for="shortName" value="Skrócona nazwa :" style="font-weight:bold"/>
+                    <p:inputText id="shortName" value="#{addContractorBean.shortContractorName}"
+                                 label="Skrócona nazwa kontrahenta"> </p:inputText>
+                    <p:message for="shortName"/>
+
+                    <h:outputLabel for="street" value="Ulica:" style="font-weight:bold"/>
+                    <p:inputText id="street" value="#{addContractorBean.street}" required="true"
+                                 label="Ulica" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="street"/>
+
+                    <h:outputLabel for="buildingNumber" value="Numer budynku:" style="font-weight:bold"/>
+                    <p:inputText id="buildingNumber" value="#{addContractorBean.buildingNumber}" required="true"
+                                 label="Numer budynku" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="buildingNumber"/>
+
+                    <h:outputLabel for="flatNumber" value="Numer lokalu:" style="font-weight:bold"/>
+                    <p:inputText id="flatNumber" value="#{addContractorBean.flatNumber}" required="false"
+                                 label="Ulica"> </p:inputText>
+                    <p:message for="flatNumber"/>
+
+                    <h:outputLabel for="postCode" value="Kod pocztowy:" style="font-weight:bold"/>
+                    <p:inputText id="postCode" value="#{addContractorBean.postCode}" required="true"
+                                 label="Kod pocztowy" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="postCode"/>
+
+                    <h:outputLabel for="city" value="Miasto:" style="font-weight:bold"/>
+                    <p:inputText id="city" value="#{addContractorBean.city}" required="true"
+                                 label="Miasto" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="city"/>
+
+                    <h:outputLabel for="province" value="Województwo:" style="font-weight:bold"/>
+                    <p:inputText id="province" value="#{addContractorBean.province}" required="false"
+                                 label="Województwo"> </p:inputText>
+                    <p:message for="province"/>
+
+                    <h:outputLabel for="representative" value="Reprezentant:" style="font-weight:bold"/>
+                    <p:inputText id="representative" value="#{addContractorBean.representative}" required="true"
+                                 label="Reprezentant" requiredMessage="Pole wymagane!"
+                                 title="Osoba reprezentująca kontrahenta" > </p:inputText>
+                    <p:message for="representative"/>
+
+                    <h:outputLabel for="bankName" value="Nazwa banku:" style="font-weight:bold"/>
+                    <p:inputText id="bankName" value="#{addContractorBean.bankName}" required="true"
+                                 label="Nazwa banku" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="bankName"/>
+
+                    <h:outputLabel for="bankAccountNumber" value="Numer Konta Bankowego:" style="font-weight:bold"/>
+                    <p:inputText id="bankAccountNumber" value="#{addContractorBean.bankAccountNumber}" required="true"
+                                 label="Numer Konta Bankowego" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="bankAccountNumber"/>
+
+                    <h:outputLabel for="nip" value="NIP kontrahenta:" style="font-weight:bold"/>
+                    <p:inputText id="nip" value="#{addContractorBean.nip}" required="true"
+                                 label="NIP kontrahenta" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="nip"/>
+
+                    <h:outputLabel for="regon" value="REGON kontrahenta:" style="font-weight:bold"/>
+                    <p:inputText id="regon" value="#{addContractorBean.regon}" required="true"
+                                 label="REGON kontrahenta" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="regon"/>
+
+                    <h:outputLabel for="krs" value="KRS kontrahenta:" style="font-weight:bold"/>
+                    <p:inputText id="krs" value="#{addContractorBean.krs}" required="true"
+                                 label="KRS kontrahenta" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="krs"/>
+
+                    <h:outputLabel for="phoneNumber" value="Telefon:" style="font-weight:bold"/>
+                    <p:inputText id="phoneNumber" value="#{addContractorBean.phoneNumber}" required="true"
+                                 label="Telefon" requiredMessage="Pole wymagane!"> </p:inputText>
+                    <p:message for="phoneNumber"/>
+
+                    <h:outputLabel for="email" value="E-email kontrahenta:" style="font-weight:bold"/>
+                    <p:inputText id="email" value="#{addContractorBean.email}" required="true"
+                                 label="E-email kontrahenta" requiredMessage="Pole wymagane!">
+                        <f:ajax event="blur"
+                                listener="#{addContractorController.validateMail}"/>
+                    </p:inputText>
+                    <p:message for="email"/>
+                </h:panelGrid>
+            </p:panel>
+            <p:commandButton value="Dodaj" update="grid" validateClient="true" style="margin-right:10px" />
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
