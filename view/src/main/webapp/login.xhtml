@@ -2,31 +2,29 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-                template="/pages/templates/template.xhtml">
+                template="/templates/template.xhtml">
 
-    <ui:param name="title" value="Logowanie"/>
+    <ui:param name="title" value="Logowanie do systemu"/>
 
+    <ui:define name="menu">
+    </ui:define>
     <ui:define name="content">
-        <h:form id="loginPageForm" styleClass="span11">
-            <div style="margin: 0 auto;" class="container span9">
-                <div style="float: left; overflow: hidden;" class="span4">
-                    <h:panelGrid columns="2" layout="grid" styleClass="span3" style="margin: auto;">
-                        <h:outputLabel id="loginLabelId" for="loginInputId" value="Login: "/>
-                        <p:inputText id="loginInputId"/>
+        <h:form prependId="false">
+            <h:outputScript library="js" name="security.js"/>
+            <p:growl id="growl" life="4000" severity="error"/>
 
-                        <h:outputLabel id="passwordLabelId" for="passwordInputId" value="Hasło: "/>
-                        <p:inputText type="password" id="passwordInputId"/>
-                        <br/>
-                        <p:commandButton id="loginButtonId" value="Zaloguj" styleClass="btn-primary"/>
-                    </h:panelGrid>
-                </div>
-                <div style="overflow: hidden" class="span4">
-                    <h4 style="margin: 0 auto;">Jeśli nie masz jeszcze konta, <br/> zarejestruj się!</h4>
-                    <br/>
-                    <br/>
-                    <p:commandButton id="registerButtonId" value="Rejestracja" styleClass="btn-success"
-                                     style="margin: auto;"/>
-                </div>
+            <div class="span7">
+                <h3 class="subsections bottom-space">Dane użytkownika</h3>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText for="j_username" value="Adres email: " style="float:right;"/>
+                    <p:inputText id="j_username" style="margin-bottom: 0px;" required="true"
+                                 requiredMessage="Proszę podać email"/>
+                    <h:outputText for="j_password" value="Hasło: " style="float:right;"/>
+                    <p:password id="j_password" style="margin-bottom: 0px;" required="true"
+                                requiredMessage="Proszę podać hasło"/>
+                    <p:commandButton id="loginButtonId" actionListener="#{loginListener.doLogin}"
+                                     styleClass="btn-success" value="Zaloguj" ajax="false" type="submit"/>
+                </h:panelGrid>
             </div>
         </h:form>
     </ui:define>

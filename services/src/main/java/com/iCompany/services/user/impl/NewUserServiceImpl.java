@@ -1,24 +1,20 @@
-package com.iCompany.user;
+package com.iCompany.services.user.impl;
 
 import com.iCompany.entities.user.User;
 import com.iCompany.entities.user.UserType;
 import com.iCompany.repositories.user.UserRepository;
+import com.iCompany.services.user.NewUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Lukasz Franczuk on 17.02.16.
+ * Created by lukasz on 23.03.16.
  */
 @Service
-public class NewUserService {
+public class NewUserServiceImpl implements NewUserService {
 
     @Autowired
     UserRepository userRepository;
-
-//    @PostConstruct
-//    public void init(){
-//        saveTestUser();
-//    }
 
     public void saveTestUser() {
         User user = new User();
