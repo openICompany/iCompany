@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="title" value="Nowa Faktura"/>
+
+
+    <ui:define name="content">
+        <h:form id="newInvoiceMainPageForm" styleClass="span12">
+            <h:outputScript library="js" name="newInvoice.js" target="head"/>
+            <p:growl id="msgs" showDetail="true"/>
+
+            <p:panel header="Nowa faktura" style="margin-bottom:10px;" width="1078px">
+                <div class="ui-grid ui-grid-responsive">
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <p:outputLabel value="Kontrahent:" for="contractorInputId"/>
+                                <p:autoComplete id="contractorInputId"/>
+                            </h:panelGrid>
+                        </div>
+
+                        <div class="ui-grid-col-4">
+                            <h:panelGrid columns="2" cellpadding="4" cellspacing="4">
+                                <p:outputLabel value="Miejsce wystawienia:" for="issuedPlaceInputId"/>
+                                <p:inputText id="issuedPlaceInputId" value="#{newInvoiceBean.issuePlace}"/>
+                                <p:outputLabel for="issueDateInputId" value="Data wystawienia:"/>
+                                <p:calendar id="issueDateInputId" value="#{newInvoiceBean.issueDate}" locale="de"
+                                            navigator="true"
+                                            pattern="yyyy-MMM-dd"/>
+                                <p:outputLabel for="sellDateInputId" value="Data sprzedaży:"/>
+                                <p:calendar id="sellDateInputId" value="#{newInvoiceBean.sellDate}" locale="de"
+                                            navigator="true"
+                                            pattern="yyyy-MMM-dd"/>
+                                <p:outputLabel for="dateOfPaymentInputId" value="Termin płatności:"/>
+                                <p:calendar id="dateOfPaymentInputId" value="#{newInvoiceBean.dateOfPayment}"
+                                            locale="de" navigator="true"
+                                            pattern="yyyy-MMM-dd"/>
+                            </h:panelGrid>
+                        </div>
+                        <div class="ui-grid-col-4">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <p:outputLabel value="Seria numeracji:" for="numberingInputId"/>
+                                <p:autoComplete id="numberingInputId"/>
+                            </h:panelGrid>
+                        </div>
+                    </div>
+                </div>
+            </p:panel>
+
+            <p:panel id="invoicePositionsPanelId">
+                <div class="ui-grid ui-grid-responsive">
+                    <div class="ui-grid-row">
+                        <p:panelGrid id="fvLineHeader" class="ui-grid-row">
+                            <div class="ui-grid-col-7">
+                                <p:outputLabel value="Nazwa towaru lub usługi:" style="width:85%"/>
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:outputLabel value="PKWiU" style="width:85%"/>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p:outputLabel value="Ilość" style="width:85%"/>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p:outputLabel value="Jednostka" style="width:82%"/>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p:outputLabel value="Cena jedn." style="width:82%"/>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p:outputLabel value="Rabat" style="width:82%"/>
+                            </div>
+                            <div class="ui-grid-col-3" style="width: 15%">
+                                <p:outputLabel value="Po rabacie" style="width:88%"/>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p:outputLabel value="VAT" style="width:82%"/>
+                            </div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="" style="width:82%"/>
+                            </div>
+                        </p:panelGrid>
+                    </div>
+                </div>
+                <ui:repeat value="#{newInvoiceBean.invoiceLines}" var="invoiceLine" varStatus="index">
+                    <div class="ui-grid ui-grid-responsive">
+                        <div class="ui-grid-row">
+                            <p:panelGrid id="fvLine" class="ui-grid-row">
+                                <div class="ui-grid-col-7">
+                                    <p:inputText id="nameOfproductInputId" value="#{invoiceLine.serviceProductName}"
+                                                 style="width:94%"/>
+                                </div>
+                                <div class="ui-grid-col-3">
+                                    <p:autoComplete id="pkwiuInputId" value="#{invoiceLine.pkwiu}"
+                                                    inputStyle="width:86%;"/>
+                                </div>
+
+                                <div class="ui-grid-col-2">
+                                    <p:inputText id="quantityInputId" styleClass="onlyNumberClass"
+                                                 value="#{invoiceLine.quantity}"
+                                                 style="width:82%">
+                                        <f:ajax event="blur"
+                                                listener="#{newInvoiceController.calculateFinalPrice(index)}"/>
+                                    </p:inputText>
+                                </div>
+                                <div class="ui-grid-col-2">
+                                    <p:inputText id="unitInputId" value="#{invoiceLine.unit}" style="width:82%"/>
+                                </div>
+                                <div class="ui-grid-col-2">
+                                    <p:inputText id="priceInputId" styleClass="onlyNumberClass"
+                                                 value="#{invoiceLine.price}"
+                                                 style="width:82%">
+                                        <f:ajax event="blur"
+                                                listener="#{newInvoiceController.calculateFinalPrice(index)}"/>
+                                    </p:inputText>
+                                </div>
+                                <div class="ui-grid-col-2">
+                                    <p:inputText id="discountInputId" styleClass="onlyNumberClass"
+                                                 value="#{invoiceLine.discount}"
+                                                 style="width:82%">
+                                        <f:ajax event="blur"
+                                                listener="#{newInvoiceController.calculateFinalPrice(index)}"/>
+                                    </p:inputText>
+                                </div>
+                                <div class="ui-grid-col-3" style="width: 15%">
+                                    <p:outputLabel id="finalPriceInputId" value="#{invoiceLine.finalPrice}"
+                                                   style="width:82%"/>
+                                </div>
+                                <div class="ui-grid-col-2">
+                                    <p:selectOneMenu id="taxInputId" value="#{invoiceLine.vat}">
+
+                                        <f:selectItem itemLabel="23%" itemValue="0.23"
+                                                      style="width: 100% !important"/>
+                                        <f:selectItem itemLabel="9%" itemValue="0.09"
+                                                      style="width: 100% !important"/>
+                                        <f:ajax event="change" listener="#{newInvoiceController.calculateFinalPrice(index)}"/>
+
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="ui-grid-col-1">
+                                    <p:commandButton actionListener="#{newInvoiceController.removeInvoiceLine(index)}"
+                                                     style="width: 60%" icon="ui-icon-close"
+                                                     update=":newInvoiceMainPageForm:invoicePositionsPanelId"/>
+                                </div>
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </p:panel>
+            <p:commandButton value="Dodaj pozycje" actionListener="#{newInvoiceController.addInvoiceLine}"
+                             update=":newInvoiceMainPageForm:invoicePositionsPanelId"/>
+
+            <p:panel header="Podsumowanie:" id="summaryPanel" style="width: 22%;margin: auto ">
+                <p:outputLabel value="Razem netto:" for="totalNetId"/>
+                <p:inputText disabled="true" id="totalNetId" value="#{newInvoiceBean.totalPriceNet}"/>
+
+                <p:outputLabel value="Vat:" for="totalTaxId"/>
+                <p:inputText disabled="true" value="#{newInvoiceBean.totalVat}" id="totalTaxId"/>
+
+                <p:outputLabel value="Razem brutto:" for="totalGrossId"/>
+                <p:inputText disabled="true" id="totalGrossId"/>
+
+            </p:panel>
+            <p:commandButton value="Submit" update="msgs" icon="ui-icon-check"/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
