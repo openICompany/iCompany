@@ -23,10 +23,10 @@
 
             <p:panel header="Nowy kontrahent">
                 <h:panelGrid columns="6" cellpadding="5">
-                    <h:outputLabel for="contractorname" value="Nazwa kontrahenta:" style="font-weight:bold"/>
-                    <p:inputText id="contractorname" value="#{addContractorBean.contractorName}"
+                    <h:outputLabel for="contractorName" value="Nazwa kontrahenta:" style="font-weight:bold"/>
+                    <p:inputText id="contractorName" value="#{addContractorBean.contractorName}"
                                  label="Nazwa kontrahenta" />
-                    <p:message for="contractorname" />
+                    <p:message for="contractorName" />
 
                     <h:outputLabel for="shortContractorName" value="Skrócona nazwa :" style="font-weight:bold"/>
                     <p:inputText id="shortContractorName" value="#{addContractorBean.shortContractorName}"
@@ -106,7 +106,7 @@
                     <p:message for="email"/>
                 </h:panelGrid>
             </p:panel>
-            <p:commandButton value="Dodaj" update="grid" style="margin-right:10px" actionListener="#{addContractorController.validateData}" />
+            <p:commandButton value="Dodaj" update="grid" style="margin-right:10px" actionListener="#{addContractorController.saveContractor}" />
         </h:form>
     </ui:define>
 

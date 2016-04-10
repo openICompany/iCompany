@@ -26,7 +26,7 @@ public class AddContractorController extends GenericController {
     @Autowired
     private AddContractorBean addContractorBean;
 
-    //itemsIds representing items from view package
+    //itemsIds representing items from view package (ids from form's fields)
     private List<String> itemsIds;
     //values from form's input fields; the keys are represented by itemsIds from the line above
     //schema: Map<itemId, valueParsedFromField>
@@ -72,40 +72,72 @@ public class AddContractorController extends GenericController {
         inputFieldsData.put(itemsIds.get(16), addContractorBean.getShortContractorName());
     }
 
-    public void validateMail() {
+    private void validateMail() {
         String email = addContractorBean.getEmail();
 
          String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
          Pattern p = Pattern.compile(ePattern);
          Matcher m = p.matcher(email);
 
-        if (!m.matches() || email == null) {
+        if (!m.matches() || email == null || email.equals("")) {
             FacesContext.getCurrentInstance().addMessage("grid:email", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Podany ciąg znaków nie jest e-mailem"));
         }
     }
 
-    public void validateContractorName(){
-        if (addContractorBean.getContractorName() == null){
-            FacesContext.getCurrentInstance().addMessage("grid:contractorname", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
+    private  void validateKrs(){
+
+        if (inputFieldsData.get("krs").length() != 10) {
+            FacesContext.getCurrentInstance().addMessage("grid:krs", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Nieprawidłowy numer KRS"));
+        }
+    }
+
+    private void validateRegon() {
+        String regon = inputFieldsData.get("regon");
+        int checksum = 0;
+        int[] weigths9 = {8, 9, 2, 3, 4, 5, 6, 7};
+        int[] weigths14 = {2, 4, 8, 5, 0, 9, 7, 3, 6, 1, 2, 4, 8};
+        switch (regon.length()){
+            case 9: {
+                        for (int i=0; i < 8;i++) {
+                            checksum += Integer.parseInt("" + regon.charAt(i)) * weigths9[i];
+                            if(checksum%11 != Integer.parseInt(""+regon.charAt(8))){
+                                FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
+                            }
+                        }
+                        break;
+                    }
+            case 14: {
+                        for (int i = 0; i < 13; i++) {
+                            checksum += Integer.parseInt("" + regon.charAt(i)) * weigths14[i];
+                            if(checksum%11 != Integer.parseInt(""+regon.charAt(13))){
+                                FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
+                            }
+                        }
+                        break;
+                    }
+            default: FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
+
+        }
+    }
+
+
+    private void validateRequiredFields(){
+        getValuesFromFormInputFields();
+        for(String itemId : itemsIds){
+            //check only fields that are required not to be null
+            if(!(itemId.equals("shortContractorName") || itemId.equals("flatNumber") || itemId.equals("province"))){
+                if(inputFieldsData.get(itemId) == null || inputFieldsData.get(itemId).equals("null") || inputFieldsData.get(itemId).isEmpty() || inputFieldsData.get(itemId).equals("")){
+                        FacesContext.getCurrentInstance().addMessage("grid:"+itemId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
+                }
+            }
         }
     }
 
     public void saveContractor(){
-
-    }
-
-    public void validateData(){
-        getValuesFromFormInputFields();
-        for(String itemId : itemsIds){
-            if((inputFieldsData.get(itemId) == null) || (inputFieldsData.get(itemId) == "null") || inputFieldsData.get(itemId).isEmpty() || (inputFieldsData.get(itemId) == "")){
-                FacesContext.getCurrentInstance().addMessage("grid:"+itemId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
-            }
-        }
-
-    }
-
-    public void validateDataOnBlur(){
+        validateRequiredFields();
         validateMail();
-        RequestContext.getCurrentInstance().update("grid");
+        validateKrs();
+        validateRegon();
     }
+
 }
