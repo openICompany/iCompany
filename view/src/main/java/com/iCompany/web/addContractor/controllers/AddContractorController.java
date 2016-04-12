@@ -100,18 +100,18 @@ public class AddContractorController extends GenericController {
             case 9: {
                         for (int i=0; i < 8;i++) {
                             checksum += Integer.parseInt("" + regon.charAt(i)) * weigths9[i];
-                            if(checksum%11 != Integer.parseInt(""+regon.charAt(8))){
-                                FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
-                            }
+                        }
+                        if(checksum%11 != Integer.parseInt(""+regon.charAt(8))){
+                            FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON! "+weigths9[7]));
                         }
                         break;
                     }
             case 14: {
                         for (int i = 0; i < 13; i++) {
                             checksum += Integer.parseInt("" + regon.charAt(i)) * weigths14[i];
-                            if(checksum%11 != Integer.parseInt(""+regon.charAt(13))){
-                                FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
-                            }
+                        }
+                        if(checksum%11 != Integer.parseInt(""+regon.charAt(13))){
+                            FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON! "+weigths14[0]));
                         }
                         break;
                     }
