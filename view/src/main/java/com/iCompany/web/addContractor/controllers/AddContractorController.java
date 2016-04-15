@@ -4,8 +4,9 @@ package com.iCompany.web.addContractor.controllers;
 import com.iCompany.qualifier.ICompanyController;
 import com.iCompany.web.addContractor.beans.AddContractorBean;
 import com.iCompany.web.generic.GenericController;
-import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -72,7 +73,7 @@ public class AddContractorController extends GenericController {
         inputFieldsData.put(itemsIds.get(16), addContractorBean.getShortContractorName());
     }
 
-    private void validateMail() {
+    private boolean validateMail() {
         String email = addContractorBean.getEmail();
 
          String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -81,56 +82,88 @@ public class AddContractorController extends GenericController {
 
         if (!m.matches() || email == null || email.equals("")) {
             FacesContext.getCurrentInstance().addMessage("grid:email", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Podany ciąg znaków nie jest e-mailem"));
-        }
+            return false;
+        }else return true;
     }
 
-    private  void validateKrs(){
+    private  boolean validateKrs(){
 
         if (inputFieldsData.get("krs").length() != 10) {
             FacesContext.getCurrentInstance().addMessage("grid:krs", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Nieprawidłowy numer KRS"));
-        }
+            return false;
+        }else return true;
     }
 
-    private void validateRegon() {
+    private boolean validateRegon() {
         String regon = inputFieldsData.get("regon");
         int checksum = 0;
         int[] weigths9 = {8, 9, 2, 3, 4, 5, 6, 7};
         int[] weigths14 = {2, 4, 8, 5, 0, 9, 7, 3, 6, 1, 2, 4, 8};
         switch (regon.length()){
             case 9: {
-                        for (int i=0; i < 8;i++) {
-                            checksum += Integer.parseInt("" + regon.charAt(i)) * weigths9[i];
-                        }
-                        if(checksum%11 != Integer.parseInt(""+regon.charAt(8))){
-                            FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON! "+weigths9[7]));
-                        }
-                        break;
+                for (int i = 0; i < weigths9.length; i++) {
+                    checksum += Integer.parseInt("" + regon.charAt(i)) * weigths9[i];
+                }
+                        if(checksum % 11 != Integer.parseInt(""+regon.charAt(8))){
+                            FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON! "));
+                            return false;
+                        } else return true;
+
                     }
             case 14: {
-                        for (int i = 0; i < 13; i++) {
+                        for (int i = 0; i < weigths14.length; i++) {
                             checksum += Integer.parseInt("" + regon.charAt(i)) * weigths14[i];
                         }
                         if(checksum%11 != Integer.parseInt(""+regon.charAt(13))){
-                            FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON! "+weigths14[0]));
-                        }
-                        break;
-                    }
-            default: FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
+                            FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
+                            return false;
+                        }else return true;
 
+                    }
+            default: {
+                FacesContext.getCurrentInstance().addMessage("grid:regon", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
+                return false;
+            }
         }
     }
 
 
-    private void validateRequiredFields(){
+    private boolean validateRequiredFields(){
         getValuesFromFormInputFields();
-        for(String itemId : itemsIds){
+        for(String itemId : itemsIds) {
             //check only fields that are required not to be null
-            if(!(itemId.equals("shortContractorName") || itemId.equals("flatNumber") || itemId.equals("province"))){
-                if(inputFieldsData.get(itemId) == null || inputFieldsData.get(itemId).equals("null") || inputFieldsData.get(itemId).isEmpty() || inputFieldsData.get(itemId).equals("")){
-                        FacesContext.getCurrentInstance().addMessage("grid:"+itemId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
-                }
+            if (!(itemId.equals("shortContractorName") || itemId.equals("flatNumber") || itemId.equals("province"))) {
+                if (inputFieldsData.get(itemId) == null || inputFieldsData.get(itemId).equals("null") || inputFieldsData.get(itemId).isEmpty() || inputFieldsData.get(itemId).equals("")) {
+                    FacesContext.getCurrentInstance().addMessage("grid:" + itemId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
+                    return false;
+                } else return true;
             }
         }
+        return false;
+    }
+
+
+    private boolean validateNip(){
+        String nip = inputFieldsData.get("nip");
+        int checksum = 0;
+        int[] weigths = {6, 5, 7, 2, 3, 4, 5, 6, 7};
+        Pattern nipPattern1 = Pattern.compile("^\\d\\d\\d-\\d\\d-\\d\\d-\\d\\d\\d$");
+        Pattern nipPattern2 = Pattern.compile("^\\d\\d\\d-\\d\\d\\d-\\d\\d-\\d\\d$");
+        Pattern nipPattern3 = Pattern.compile("^\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d$");
+        Matcher matcher1 = nipPattern1.matcher(nip);
+        Matcher matcher2 = nipPattern2.matcher(nip);
+        Matcher matcher3 = nipPattern3.matcher(nip);
+        if (matcher1.matches() || matcher2.matches() || matcher3.matches()) {
+            for (int i = 0; i < weigths.length; i++) {
+                if (nip.charAt(i) != '-') {
+                    checksum += Integer.parseInt("" + nip.charAt(i)) * weigths[i];
+                }
+            }
+            if (checksum % 11 != Integer.parseInt("" + nip.charAt(nip.length() - 1))) {
+                FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
+                return false;
+            } else return true;
+        }else return false;
     }
 
     public void saveContractor(){
@@ -138,6 +171,11 @@ public class AddContractorController extends GenericController {
         validateMail();
         validateKrs();
         validateRegon();
+        validateNip();
+        /*if (validateRequiredFields() && validateMail() && validateRegon() && validateKrs() && validateNip()) {
+            //safe the data
+
+        }*/
     }
 
 }
