@@ -130,16 +130,17 @@ public class AddContractorController extends GenericController {
 
     private boolean validateRequiredFields(){
         getValuesFromFormInputFields();
+        boolean isValid = false;
         for(String itemId : itemsIds) {
             //check only fields that are required not to be null
             if (!(itemId.equals("shortContractorName") || itemId.equals("flatNumber") || itemId.equals("province"))) {
                 if (inputFieldsData.get(itemId) == null || inputFieldsData.get(itemId).equals("null") || inputFieldsData.get(itemId).isEmpty() || inputFieldsData.get(itemId).equals("")) {
                     FacesContext.getCurrentInstance().addMessage("grid:" + itemId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
-                    return false;
-                } else return true;
+                    isValid = false;
+                } else isValid = true;
             }
         }
-        return false;
+        return isValid;
     }
 
 
@@ -153,6 +154,7 @@ public class AddContractorController extends GenericController {
         Matcher matcher1 = nipPattern1.matcher(nip);
         Matcher matcher2 = nipPattern2.matcher(nip);
         Matcher matcher3 = nipPattern3.matcher(nip);
+        nip = nip.replaceAll("-", "");
         if (matcher1.matches() || matcher2.matches() || matcher3.matches()) {
             for (int i = 0; i < weigths.length; i++) {
                 if (nip.charAt(i) != '-') {
@@ -160,10 +162,13 @@ public class AddContractorController extends GenericController {
                 }
             }
             if (checksum % 11 != Integer.parseInt("" + nip.charAt(nip.length() - 1))) {
-                FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
+                FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny NIP!"));
                 return false;
             } else return true;
-        }else return false;
+        }else {
+            FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny NIP!"));
+            return false;
+        }
     }
 
     public void saveContractor(){
