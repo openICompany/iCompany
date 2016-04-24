@@ -2,7 +2,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-                template="/pages/templates/template.xhtml">
+                template="/templates/template.xhtml">
 
     <ui:param name="title" value="Ustawienia"/>
 
@@ -13,16 +13,16 @@
                 <div id="userInfo">
                     <h:panelGrid columns="2">
                         <h:outputLabel for="userName">Imie: </h:outputLabel>
-                        <h:inputText id="userName" value="Imie"/>
+                        <h:inputText id="userName" value="#{userCustomizationBean.userName}"/>
 
                         <h:outputLabel for="userSurname">Nazwisko: </h:outputLabel>
-                        <h:inputText id="userSurname" value="Nazwisko"/>
+                        <h:inputText id="userSurname" value="#{userCustomizationBean.userSurname}"/>
 
                         <h:outputLabel for="userEmail">Adres email: </h:outputLabel>
-                        <h:inputText id="userEmail" value="NIP"/>
+                        <h:inputText id="userEmail" value="#{userCustomizationBean.userEmail}"/>
 
                         <h:outputLabel for="userPassword">Hasło: </h:outputLabel>
-                        <h:inputText id="userPassword" value="KRS"/>
+                        <h:inputText id="userPassword" value="#{userCustomizationBean.userPassword}"/>
 
                     </h:panelGrid>
                 </div>
@@ -30,47 +30,47 @@
                     <h3>Podstawowe informacje</h3>
                     <h:panelGrid columns="2">
                         <h:outputLabel for="companyName">Nazwa firmy: </h:outputLabel>
-                        <h:inputText id="companyName" value="Company Name"/>
+                        <h:inputText id="companyName" value="#{userCustomizationBean.companyName}"/>
 
-                        <h:outputLabel for="REGON">REGON: </h:outputLabel>
-                        <h:inputText id="REGON" value="REGON"/>
+                        <h:outputLabel for="regon">regon: </h:outputLabel>
+                        <h:inputText id="regon" value="#{userCustomizationBean.regon}"/>
 
-                        <h:outputLabel for="NIP">NIP: </h:outputLabel>
-                        <h:inputText id="NIP" value="NIP"/>
+                        <h:outputLabel for="nip">nip: </h:outputLabel>
+                        <h:inputText id="nip" value="#{userCustomizationBean.nip}"/>
 
-                        <h:outputLabel for="KRS">KRS: </h:outputLabel>
-                        <h:inputText id="KRS" value="KRS"/>
+                        <h:outputLabel for="krs">krs: </h:outputLabel>
+                        <h:inputText id="krs" value="#{userCustomizationBean.krs}"/>
 
                         <h:outputLabel for="BANK_NAME">Nazwa banku: </h:outputLabel>
-                        <h:inputText id="BANK_NAME" value="Nazwa banku"/>
+                        <h:inputText id="BANK_NAME" value="#{userCustomizationBean.bankName}"/>
 
                         <h:outputLabel for="BANK_ACCOUNT_NUMBER">Numer konta bankowego: </h:outputLabel>
-                        <h:inputText id="BANK_ACCOUNT_NUMBER" value="Numer konta bankowego"/>
+                        <h:inputText id="BANK_ACCOUNT_NUMBER" value="#{userCustomizationBean.bankAccountNumber}"/>
 
                         <h:outputLabel for="REPRESENTATIVE">Przedstawiciel: </h:outputLabel>
-                        <h:inputText id="REPRESENTATIVE" value="Przedstawiciel"/>
+                        <h:inputText id="REPRESENTATIVE" value="#{userCustomizationBean.representative}"/>
                     </h:panelGrid>
                 </div>
                 <div style="float: left; margin-left: 10px;">
                     <h3>Adres firmy</h3>
                     <h:panelGrid columns="2">
                         <h:outputLabel for="STREET">Ulica: </h:outputLabel>
-                        <h:inputText id="STREET" value="Street"/>
+                        <h:inputText id="STREET" value="#{userCustomizationBean.street}"/>
 
                         <h:outputLabel for="BUILDING_NUMBER">Numer budynku: </h:outputLabel>
-                        <h:inputText id="BUILDING_NUMBER" value="Building number"/>
+                        <h:inputText id="BUILDING_NUMBER" value="#{userCustomizationBean.buildingNumber}"/>
 
                         <h:outputLabel for="FLAT_MANE">Numer mieszkania: </h:outputLabel>
-                        <h:inputText id="FLAT_MANE" value="Flat number"/>
+                        <h:inputText id="FLAT_MANE" value="#{userCustomizationBean.flatNumber}"/>
 
                         <h:outputLabel for="POST_CODE">Kod pocztowy: </h:outputLabel>
-                        <h:inputText id="POST_CODE" value="Post code"/>
+                        <h:inputText id="POST_CODE" value="#{userCustomizationBean.postCode}"/>
 
                         <h:outputLabel for="CITY">Miasto: </h:outputLabel>
-                        <h:inputText id="CITY" value="City"/>
+                        <h:inputText id="CITY" value="#{userCustomizationBean.city}"/>
 
                         <h:outputLabel for="PROVINCE">Województwo: </h:outputLabel>
-                        <h:inputText id="PROVINCE" value="Province"/>
+                        <h:inputText id="PROVINCE" value="#{userCustomizationBean.province}"/>
                     </h:panelGrid>
                 </div>
             </div>
