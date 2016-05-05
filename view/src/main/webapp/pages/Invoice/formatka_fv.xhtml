@@ -45,7 +45,7 @@
                         <div class="ui-grid-col-4">
                             <h:panelGrid columns="2" cellpadding="5">
                                 <p:outputLabel value="Seria numeracji:" for="numberingInputId"/>
-                                <p:autoComplete id="numberingInputId"/>
+                                <p:inputText id="numberingInputId" value="#{newInvoiceBean.invoiceID}"/>
                             </h:panelGrid>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
 
                                 <div class="ui-grid-col-2">
                                     <p:inputText id="quantityInputId" styleClass="onlyNumberClass"
-                                                 value="#{invoiceLine.quantity}"
+                                                 value="#{invoiceLine.quantityString}"
                                                  style="width:82%">
                                         <f:ajax event="blur"
                                                 listener="#{newInvoiceController.calculateFinalPrice(index)}"/>
@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="ui-grid-col-2">
                                     <p:inputText id="priceInputId" styleClass="onlyNumberClass"
-                                                 value="#{invoiceLine.price}"
+                                                 value="#{invoiceLine.priceString}"
                                                  style="width:82%">
                                         <f:ajax event="blur"
                                                 listener="#{newInvoiceController.calculateFinalPrice(index)}"/>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="ui-grid-col-2">
                                     <p:inputText id="discountInputId" styleClass="onlyNumberClass"
-                                                 value="#{invoiceLine.discount}"
+                                                 value="#{invoiceLine.discountString}"
                                                  style="width:82%">
                                         <f:ajax event="blur"
                                                 listener="#{newInvoiceController.calculateFinalPrice(index)}"/>
@@ -165,7 +165,7 @@
                 <p:inputText disabled="true" id="totalGrossId"/>
 
             </p:panel>
-            <p:commandButton value="Submit" update="msgs" icon="ui-icon-check"/>
+            <p:commandButton value="Submit" action="#{newInvoiceController.saveInvoice}" update="msgs" icon="ui-icon-check"/>
         </h:form>
 
     </ui:define>

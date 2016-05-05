@@ -1,4 +1,4 @@
-package com.iCompany.web.invoice.bo;
+package com.iCompany.invoice.bo;
 
 import java.math.BigDecimal;
 
@@ -11,11 +11,47 @@ public class InvoiceLineBo {
     private String serviceProductName;
     private String pkwiu;
     private BigDecimal quantity;
+    private String quantityString;
     private String unit;
     private BigDecimal price;
+    private String priceString;
     private BigDecimal discount;
+    private String discountString;
     private BigDecimal finalPrice;
+    private String finalPriceString;
     private BigDecimal vat;
+
+    public String getQuantityString() {
+        return quantityString;
+    }
+
+    public void setQuantityString(String quantityString) {
+        this.quantityString = quantityString;
+    }
+
+    public String getPriceString() {
+        return priceString;
+    }
+
+    public void setPriceString(String priceString) {
+        this.priceString = priceString;
+    }
+
+    public String getDiscountString() {
+        return discountString;
+    }
+
+    public void setDiscountString(String discountString) {
+        this.discountString = discountString;
+    }
+
+    public String getFinalPriceString() {
+        return finalPriceString;
+    }
+
+    public void setFinalPriceString(String finalPriceString) {
+        this.finalPriceString = finalPriceString;
+    }
 
     public String getServiceProductName() {
         return serviceProductName;

@@ -21,14 +21,23 @@ public class InvoicePosition {
     @Column(name = "SERVICE_PRODUCT_NAME")
     private String serviceProductName;
 
+    @Column(name = "SERVICE_PRODUCT_PKWIU")
+    private String serviceProducPkwiu;
+
     @Column(name = "SERVICE_PRODUCT_AMOUNT")
-    private Integer serviceProductAmount;
+    private BigDecimal serviceProductAmount;
+
+    @Column(name = "SERVICE_PRODUCT_UNIT")
+    private String serviceProductUnit;
 
     @Column(name = "SERVICE_PRODUCT_PRICE_NET")
     private BigDecimal serviceProductPriceNet;
 
-    @Column(name = "SERVICE_PRODUCT_PRICE_GROSS")
-    private BigDecimal serviceProductPriceGross;
+    @Column(name = "SERVICE_PRODUCT_DISCOUNT")
+    private BigDecimal serviceProductDiscount;
+
+    @Column(name = "SERVICE_PRODUCT_FINAL_PRICE")
+    private BigDecimal serviceProductFinalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VAT_RATE_ID")
@@ -62,11 +71,11 @@ public class InvoicePosition {
         this.serviceProductName = serviceProductName;
     }
 
-    public Integer getServiceProductAmount() {
+    public BigDecimal getServiceProductAmount() {
         return serviceProductAmount;
     }
 
-    public void setServiceProductAmount(Integer serviceProductAmount) {
+    public void setServiceProductAmount(BigDecimal serviceProductAmount) {
         this.serviceProductAmount = serviceProductAmount;
     }
 
@@ -76,14 +85,6 @@ public class InvoicePosition {
 
     public void setServiceProductPriceNet(BigDecimal serviceProductPriceNet) {
         this.serviceProductPriceNet = serviceProductPriceNet;
-    }
-
-    public BigDecimal getServiceProductPriceGross() {
-        return serviceProductPriceGross;
-    }
-
-    public void setServiceProductPriceGross(BigDecimal serviceProductPriceGross) {
-        this.serviceProductPriceGross = serviceProductPriceGross;
     }
 
     public VATRate getVatRate() {
@@ -101,4 +102,37 @@ public class InvoicePosition {
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
+
+    public String getServiceProducPkwiu() {
+        return serviceProducPkwiu;
+    }
+
+    public void setServiceProducPkwiu(String serviceProducPkwiu) {
+        this.serviceProducPkwiu = serviceProducPkwiu;
+    }
+
+    public String getServiceProductUnit() {
+        return serviceProductUnit;
+    }
+
+    public void setServiceProductUnit(String serviceProductUnit) {
+        this.serviceProductUnit = serviceProductUnit;
+    }
+
+    public BigDecimal getServiceProductDiscount() {
+        return serviceProductDiscount;
+    }
+
+    public void setServiceProductDiscount(BigDecimal serviceProductDiscount) {
+        this.serviceProductDiscount = serviceProductDiscount;
+    }
+
+    public BigDecimal getServiceProductFinalPrice() {
+        return serviceProductFinalPrice;
+    }
+
+    public void setServiceProductFinalPrice(BigDecimal serviceProductFinalPrice) {
+        this.serviceProductFinalPrice = serviceProductFinalPrice;
+    }
 }
+

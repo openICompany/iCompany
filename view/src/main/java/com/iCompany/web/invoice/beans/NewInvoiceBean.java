@@ -1,10 +1,11 @@
 package com.iCompany.web.invoice.beans;
 
-import com.iCompany.web.invoice.bo.InvoiceLineBo;
+import com.iCompany.qualifier.ICompanyBackingBean;
+import com.iCompany.invoice.bo.InvoiceLineBo;
+import com.iCompany.web.invoice.utilities.Utils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,17 +16,18 @@ import java.util.List;
  */
 
 @ManagedBean
-@ViewScoped
+@ICompanyBackingBean
 public class NewInvoiceBean {
 
+    private String invoiceID;
     private String issuePlace;
     private Date issueDate;
     private Date sellDate;
     private Date dateOfPayment;
     private BigDecimal totalPriceNet;
     private BigDecimal totalVat;
-    private  List<InvoiceLineBo> invoiceLines;
-    final static BigDecimal VAT = new BigDecimal(0.23);
+    private List<InvoiceLineBo> invoiceLines;
+
 
     public BigDecimal getTotalVat() {
         return totalVat;
@@ -38,8 +40,8 @@ public class NewInvoiceBean {
     @PostConstruct
     public void init() {
         invoiceLines = new ArrayList<InvoiceLineBo>();
-        InvoiceLineBo invoiceLineBo=new InvoiceLineBo();
-        invoiceLineBo.setVat(VAT);
+        InvoiceLineBo invoiceLineBo = new InvoiceLineBo();
+        invoiceLineBo.setVat(Utils.getVatDefault());
         invoiceLines.add(invoiceLineBo);
 
 
@@ -57,11 +59,17 @@ public class NewInvoiceBean {
         return invoiceLines;
     }
 
-    public BigDecimal getTotalPriceNet() { return totalPriceNet;    }
+    public BigDecimal getTotalPriceNet() {
+        return totalPriceNet;
+    }
 
-    public void setTotalPriceNet(BigDecimal finalPriceNet) { this.totalPriceNet = finalPriceNet;    }
+    public void setTotalPriceNet(BigDecimal finalPriceNet) {
+        this.totalPriceNet = finalPriceNet;
+    }
 
-    public void setInvoiceLines(List<InvoiceLineBo> invoiceLines) { this.invoiceLines = invoiceLines;    }
+    public void setInvoiceLines(List<InvoiceLineBo> invoiceLines) {
+        this.invoiceLines = invoiceLines;
+    }
 
     public String getIssuePlace() {
         return issuePlace;
@@ -93,5 +101,14 @@ public class NewInvoiceBean {
 
     public void setDateOfPayment(Date dateOfPayment) {
         this.dateOfPayment = dateOfPayment;
+    }
+
+
+    public String getInvoiceID() {
+        return invoiceID;
+    }
+
+    public void setInvoiceID(String invoiceID) {
+        this.invoiceID = invoiceID;
     }
 }

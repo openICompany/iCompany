@@ -28,6 +28,10 @@ public class Invoice {
     @Column(name = "ISSUE_PLACE")
     private String issuePlace;
 
+
+    @Column(name="PAYMENT_DATE")
+    private Date paymentDate;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "invoice")
     private List<InvoicePosition> invoicePositions;
 
@@ -79,4 +83,13 @@ public class Invoice {
     public void setInvoicePositions(List<InvoicePosition> invoicePositions) {
         this.invoicePositions = invoicePositions;
     }
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
 }
+
