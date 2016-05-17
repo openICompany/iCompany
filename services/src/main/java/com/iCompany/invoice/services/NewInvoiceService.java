@@ -6,12 +6,16 @@ import com.iCompany.invoice.bo.InvoiceLineBo;
 import com.iCompany.repositories.invoice.InvoicePositionRepository;
 import com.iCompany.repositories.invoice.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import static org.springframework.data.domain.Sort.DEFAULT_DIRECTION;
 
 /**
  * Created by msadloch on 4/26/2016.
@@ -23,6 +27,8 @@ public class NewInvoiceService {
     private InvoiceRepository invoiceRepository;
     @Autowired
     private InvoicePositionRepository invoicePositionRepository;
+
+
 
     public void saveInvoice(String invoiceNumber, String issuePlace, Date issueDate, Date sellDate, Date dateOfPayment, List<InvoiceLineBo> invoiceLines) {
         Invoice invoice = new Invoice();
@@ -51,7 +57,14 @@ public class NewInvoiceService {
             invoicePositionRepository.saveAndFlush(invoicePosition);
 
         }
-
-
     }
+
+    public List<Invoice> getAllinvoiceIds(){
+        List<String> properties= new ArrayList<String>();
+        properties.add("invoiceNumber");
+        Sort sort=new Sort(Sort.Direction.ASC,properties);
+       return invoiceRepository.findAll(sort);
+    }
+
+
 }

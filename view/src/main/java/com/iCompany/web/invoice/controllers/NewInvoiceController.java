@@ -8,6 +8,7 @@ import com.iCompany.web.invoice.utilities.Utils;
 import com.sun.faces.facelets.tag.IterationStatus;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.faces.bean.ManagedBean;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -27,11 +28,12 @@ public class NewInvoiceController {
     private NewInvoiceService newInvoiceService;
 
 
-
     public void saveInvoice() {
-        newInvoiceService.saveInvoice(newInvoiceBean.getInvoiceID(),newInvoiceBean.getIssuePlace(),newInvoiceBean.getIssueDate(),newInvoiceBean.getSellDate(),newInvoiceBean.getDateOfPayment(), newInvoiceBean.getInvoiceLines());
-
+        newInvoiceService.saveInvoice(newInvoiceBean.getInvoiceID(), newInvoiceBean.getIssuePlace(), newInvoiceBean.getIssueDate(), newInvoiceBean.getSellDate(), newInvoiceBean.getDateOfPayment(), newInvoiceBean.getInvoiceLines());
     }
+
+
+
 
     public void addInvoiceLine() {
         List<InvoiceLineBo> invoiceLineList = newInvoiceBean.getInvoiceLines();
@@ -46,13 +48,13 @@ public class NewInvoiceController {
         BigDecimal discount = new BigDecimal(0);
         BigDecimal quantity = new BigDecimal(1);
         if (invoicelineBO.getDiscountString() != null && !invoicelineBO.getDiscountString().isEmpty()) {
-            discount = new BigDecimal(invoicelineBO.getDiscountString().replace(",",".")).divide(new BigDecimal(100));
+            discount = new BigDecimal(invoicelineBO.getDiscountString().replace(",", ".")).divide(new BigDecimal(100));
         }
-        if (invoicelineBO.getQuantityString() != null && !invoicelineBO.getQuantityString().isEmpty() ) {
-            quantity= new BigDecimal(invoicelineBO.getQuantityString().replace(",","."));
-             }
+        if (invoicelineBO.getQuantityString() != null && !invoicelineBO.getQuantityString().isEmpty()) {
+            quantity = new BigDecimal(invoicelineBO.getQuantityString().replace(",", "."));
+        }
         if (invoicelineBO.getPriceString() != null && !invoicelineBO.getPriceString().isEmpty()) {
-            BigDecimal price = new BigDecimal(invoicelineBO.getPriceString().replace(",","."));
+            BigDecimal price = new BigDecimal(invoicelineBO.getPriceString().replace(",", "."));
             BigDecimal afterDiscount = price.multiply(new BigDecimal(1).subtract(discount));
             invoicelineBO.setFinalPrice(afterDiscount.multiply(quantity));
             RequestContext.getCurrentInstance().update("newInvoiceMainPageForm:j_idt55:" + iterationStatus.getIndex() + ":finalPriceInputId");

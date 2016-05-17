@@ -1,8 +1,11 @@
 package com.iCompany.web.invoice.beans;
 
+import com.iCompany.entities.invoice.Invoice;
+import com.iCompany.invoice.services.NewInvoiceService;
 import com.iCompany.qualifier.ICompanyBackingBean;
 import com.iCompany.invoice.bo.InvoiceLineBo;
 import com.iCompany.web.invoice.utilities.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -29,13 +32,10 @@ public class NewInvoiceBean {
     private List<InvoiceLineBo> invoiceLines;
 
 
-    public BigDecimal getTotalVat() {
-        return totalVat;
-    }
 
-    public void setTotalVat(BigDecimal totalVat) {
-        this.totalVat = totalVat;
-    }
+
+    @Autowired
+    private NewInvoiceService newInvoiceService;
 
     @PostConstruct
     public void init() {
@@ -43,8 +43,8 @@ public class NewInvoiceBean {
         InvoiceLineBo invoiceLineBo = new InvoiceLineBo();
         invoiceLineBo.setVat(Utils.getVatDefault());
         invoiceLines.add(invoiceLineBo);
-
-
+        List<Invoice> allInvoices =  newInvoiceService.getAllinvoiceIds();
+        setInvoiceID(allInvoices.get(allInvoices.size()-1).getInvoiceNumber());
     }
 
 
@@ -110,5 +110,13 @@ public class NewInvoiceBean {
 
     public void setInvoiceID(String invoiceID) {
         this.invoiceID = invoiceID;
+    }
+
+    public BigDecimal getTotalVat() {
+        return totalVat;
+    }
+
+    public void setTotalVat(BigDecimal totalVat) {
+        this.totalVat = totalVat;
     }
 }
