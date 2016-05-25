@@ -1,12 +1,14 @@
 package com.iCompany.web.addContractor.controllers;
 
 
+import com.iCompany.addContractor.AddContractorService;
+import com.iCompany.entities.company.Company;
 import com.iCompany.qualifier.ICompanyController;
 import com.iCompany.web.addContractor.beans.AddContractorBean;
 import com.iCompany.web.generic.GenericController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -27,11 +29,24 @@ public class AddContractorController extends GenericController {
     @Autowired
     private AddContractorBean addContractorBean;
 
+    @Autowired
+    private AddContractorService addContractorService;
+
     //itemsIds representing items from view package (ids from form's fields)
     private List<String> itemsIds;
     //values from form's input fields; the keys are represented by itemsIds from the line above
     //schema: Map<itemId, valueParsedFromField>
     private Map<String, String> inputFieldsData;
+
+    @PostConstruct
+    private void loadCompanies() {
+        addContractorBean.setCompanies(new HashMap<String, Long>());
+        String userName = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        List<Company> companies = new ArrayList<Company>(addContractorService.getUserCompanies(userName));
+        for (Company company : companies) {
+            addContractorBean.getCompanies().put(company.getCompanyName(), company.getCompanyId());
+        }
+    }
 
     private void getValuesFromFormInputFields(){
         itemsIds = new ArrayList<String>();
@@ -127,22 +142,20 @@ public class AddContractorController extends GenericController {
         }
     }
 
-
     private boolean validateRequiredFields(){
         getValuesFromFormInputFields();
-        boolean isValid = false;
+        boolean requiredPresent = false;
         for(String itemId : itemsIds) {
             //check only fields that are required not to be null
             if (!(itemId.equals("shortContractorName") || itemId.equals("flatNumber") || itemId.equals("province"))) {
                 if (inputFieldsData.get(itemId) == null || inputFieldsData.get(itemId).equals("null") || inputFieldsData.get(itemId).isEmpty() || inputFieldsData.get(itemId).equals("")) {
                     FacesContext.getCurrentInstance().addMessage("grid:" + itemId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
-                    isValid = false;
-                } else isValid = true;
+                    requiredPresent = false;
+                } else requiredPresent = true;
             }
         }
-        return isValid;
+        return requiredPresent;
     }
-
 
     private boolean validateNip(){
         String nip = inputFieldsData.get("nip");
@@ -154,7 +167,6 @@ public class AddContractorController extends GenericController {
         Matcher matcher1 = nipPattern1.matcher(nip);
         Matcher matcher2 = nipPattern2.matcher(nip);
         Matcher matcher3 = nipPattern3.matcher(nip);
-        nip = nip.replaceAll("-", "");
         if (matcher1.matches() || matcher2.matches() || matcher3.matches()) {
             for (int i = 0; i < weigths.length; i++) {
                 if (nip.charAt(i) != '-') {
@@ -162,21 +174,20 @@ public class AddContractorController extends GenericController {
                 }
             }
             if (checksum % 11 != Integer.parseInt("" + nip.charAt(nip.length() - 1))) {
-                FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny NIP!"));
+                FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
                 return false;
             } else return true;
-        }else {
-            FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny NIP!"));
-            return false;
-        }
+        }else return false;
     }
 
     public void saveContractor(){
-        validateRequiredFields();
-        validateMail();
-        validateKrs();
-        validateRegon();
-        validateNip();
+        
+        if(validateRequiredFields()) {
+            validateMail();
+            validateKrs();
+            validateRegon();
+            validateNip();
+        }
         /*if (validateRequiredFields() && validateMail() && validateRegon() && validateKrs() && validateNip()) {
             //safe the data
 

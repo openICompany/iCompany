@@ -4,7 +4,6 @@ import com.iCompany.qualifier.ICompanyBackingBean;
 import com.iCompany.web.generic.GenericBackingBean;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import java.util.Map;
 
 /**
@@ -30,8 +29,9 @@ public class AddContractorBean extends GenericBackingBean {
     private String krs;
     private String phoneNumber;
     private String email;
-    private Map<String, String> companies;
+    private Map<String, Long> companies;
     private String company;
+
 
     public String getContractorName() {
         return contractorName;
@@ -161,11 +161,11 @@ public class AddContractorBean extends GenericBackingBean {
         this.email = email;
     }
 
-    public Map<String, String> getCompanies() {
+    public Map<String, Long> getCompanies() {
         return companies;
     }
 
-    public void setCompanies(Map<String, String> companies) {
+    public void setCompanies(Map<String, Long> companies) {
         this.companies = companies;
     }
 
