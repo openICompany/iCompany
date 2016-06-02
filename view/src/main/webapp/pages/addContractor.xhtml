@@ -12,12 +12,12 @@
         <h:form id="grid">
             <p:panel header="Wybór firmy dla której ma być dodany nowy kontrahent">
                 <h:panelGrid columns="8" cellpadding="5">
-                    <p:outputLabel for="company" value="Firma: "/>
-                    <p:selectOneMenu id="company" value="#{addContractorBean.company}" style="width:150px">
+                    <p:outputLabel for="companyId" value="Firma: "/>
+                    <p:selectOneMenu id="companyId" value="#{addContractorBean.companyId}" style="width:150px">
                         <f:selectItem itemLabel="Wybierz firmę" itemValue="#{null}"/>
                         <f:selectItems value="#{addContractorBean.companies}"/>
                     </p:selectOneMenu>
-                    <p:message for="company"/>
+                    <p:message for="companyId"/>
                 </h:panelGrid>
             </p:panel>
 

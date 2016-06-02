@@ -1,17 +1,22 @@
 package com.iCompany.web.addContractor.controllers;
 
 
-import com.iCompany.addContractor.AddContractorService;
+import com.iCompany.addContractor.bo.AddContractorBo;
+import com.iCompany.addContractor.services.AddContractorService;
 import com.iCompany.entities.company.Company;
+import com.iCompany.entities.user.User;
 import com.iCompany.qualifier.ICompanyController;
+import com.iCompany.repositories.user.UserRepository;
 import com.iCompany.web.addContractor.beans.AddContractorBean;
 import com.iCompany.web.generic.GenericController;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +37,12 @@ public class AddContractorController extends GenericController {
     @Autowired
     private AddContractorService addContractorService;
 
+    //just for testing
+    @Autowired
+    private UserRepository userRepository;
+
+    //TODO service which will return currently logged user
+
     //itemsIds representing items from view package (ids from form's fields)
     private List<String> itemsIds;
     //values from form's input fields; the keys are represented by itemsIds from the line above
@@ -41,51 +52,55 @@ public class AddContractorController extends GenericController {
     @PostConstruct
     private void loadCompanies() {
         addContractorBean.setCompanies(new HashMap<String, Long>());
-        String userName = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-        List<Company> companies = new ArrayList<Company>(addContractorService.getUserCompanies(userName));
+        User user; //will be get from Session Service
+        //test
+
+        user = userRepository.findByUserId(4l);
+        List<Company> companies = new ArrayList<Company>(addContractorService.getUserCompanies(user));
         for (Company company : companies) {
             addContractorBean.getCompanies().put(company.getCompanyName(), company.getCompanyId());
         }
     }
 
     private void getValuesFromFormInputFields(){
-        itemsIds = new ArrayList<String>();
-        itemsIds.add("bankAccountNumber");
-        itemsIds.add("bankName");
-        itemsIds.add("buildingNumber");
-        itemsIds.add("city");
-        itemsIds.add("contractorName");
-        itemsIds.add("company");
-        itemsIds.add("email");
-        itemsIds.add("flatNumber");
-        itemsIds.add("krs");
-        itemsIds.add("regon");
-        itemsIds.add("nip");
-        itemsIds.add("phoneNumber");
-        itemsIds.add("postCode");
-        itemsIds.add("province");
-        itemsIds.add("representative");
-        itemsIds.add("street");
-        itemsIds.add("shortContractorName");
 
-        inputFieldsData= new HashMap<String, String>();
-        inputFieldsData.put(itemsIds.get(0), addContractorBean.getBankAccountNumber());
-        inputFieldsData.put(itemsIds.get(1), addContractorBean.getBankName());
-        inputFieldsData.put(itemsIds.get(2), addContractorBean.getBuildingNumber());
-        inputFieldsData.put(itemsIds.get(3), addContractorBean.getCity());
-        inputFieldsData.put(itemsIds.get(4), addContractorBean.getContractorName());
-        inputFieldsData.put(itemsIds.get(5), addContractorBean.getCompany());
-        inputFieldsData.put(itemsIds.get(6), addContractorBean.getEmail());
-        inputFieldsData.put(itemsIds.get(7), addContractorBean.getFlatNumber());
-        inputFieldsData.put(itemsIds.get(8), addContractorBean.getKrs());
-        inputFieldsData.put(itemsIds.get(9), addContractorBean.getRegon());
-        inputFieldsData.put(itemsIds.get(10), addContractorBean.getNip());
-        inputFieldsData.put(itemsIds.get(11), addContractorBean.getPhoneNumber());
-        inputFieldsData.put(itemsIds.get(12), addContractorBean.getPostCode());
-        inputFieldsData.put(itemsIds.get(13), addContractorBean.getProvince());
-        inputFieldsData.put(itemsIds.get(14), addContractorBean.getRepresentative());
-        inputFieldsData.put(itemsIds.get(15), addContractorBean.getStreet());
-        inputFieldsData.put(itemsIds.get(16), addContractorBean.getShortContractorName());
+//        itemsIds = new ArrayList<String>();
+//        itemsIds.add("bankAccountNumber");
+//        itemsIds.add("bankName");
+//        itemsIds.add("buildingNumber");
+//        itemsIds.add("city");
+//        itemsIds.add("contractorName");
+//        itemsIds.add("company");
+//        itemsIds.add("email");
+//        itemsIds.add("flatNumber");
+//        itemsIds.add("krs");
+//        itemsIds.add("regon");
+//        itemsIds.add("nip");
+//        itemsIds.add("phoneNumber");
+//        itemsIds.add("postCode");
+//        itemsIds.add("province");
+//        itemsIds.add("representative");
+//        itemsIds.add("street");
+//        itemsIds.add("shortContractorName");
+//
+//        inputFieldsData= new HashMap<String, String>();
+//        inputFieldsData.put(itemsIds.get(0), addContractorBean.getBankAccountNumber());
+//        inputFieldsData.put(itemsIds.get(1), addContractorBean.getBankName());
+//        inputFieldsData.put(itemsIds.get(2), addContractorBean.getBuildingNumber());
+//        inputFieldsData.put(itemsIds.get(3), addContractorBean.getCity());
+//        inputFieldsData.put(itemsIds.get(4), addContractorBean.getContractorName());
+//        //inputFieldsData.put(itemsIds.get(5), addContractorBean.getCompanyId());
+//        inputFieldsData.put(itemsIds.get(6), addContractorBean.getEmail());
+//        inputFieldsData.put(itemsIds.get(7), addContractorBean.getFlatNumber());
+//        inputFieldsData.put(itemsIds.get(8), addContractorBean.getKrs());
+//        inputFieldsData.put(itemsIds.get(9), addContractorBean.getRegon());
+//        inputFieldsData.put(itemsIds.get(10), addContractorBean.getNip());
+//        inputFieldsData.put(itemsIds.get(11), addContractorBean.getPhoneNumber());
+//        inputFieldsData.put(itemsIds.get(12), addContractorBean.getPostCode());
+//        inputFieldsData.put(itemsIds.get(13), addContractorBean.getProvince());
+//        inputFieldsData.put(itemsIds.get(14), addContractorBean.getRepresentative());
+//        inputFieldsData.put(itemsIds.get(15), addContractorBean.getStreet());
+//        inputFieldsData.put(itemsIds.get(16), addContractorBean.getShortContractorName());
     }
 
     private boolean validateMail() {
@@ -103,14 +118,14 @@ public class AddContractorController extends GenericController {
 
     private  boolean validateKrs(){
 
-        if (inputFieldsData.get("krs").length() != 10) {
+        if (addContractorBean.getKrs().length() != 10) {
             FacesContext.getCurrentInstance().addMessage("grid:krs", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Nieprawidłowy numer KRS"));
             return false;
         }else return true;
     }
 
     private boolean validateRegon() {
-        String regon = inputFieldsData.get("regon");
+        String regon = addContractorBean.getRegon();
         int checksum = 0;
         int[] weigths9 = {8, 9, 2, 3, 4, 5, 6, 7};
         int[] weigths14 = {2, 4, 8, 5, 0, 9, 7, 3, 6, 1, 2, 4, 8};
@@ -142,23 +157,38 @@ public class AddContractorController extends GenericController {
         }
     }
 
-    private boolean validateRequiredFields(){
-        getValuesFromFormInputFields();
+    private boolean validateRequiredFields() {
+//        getValuesFromFormInputFields();
         boolean requiredPresent = false;
-        for(String itemId : itemsIds) {
-            //check only fields that are required not to be null
-            if (!(itemId.equals("shortContractorName") || itemId.equals("flatNumber") || itemId.equals("province"))) {
-                if (inputFieldsData.get(itemId) == null || inputFieldsData.get(itemId).equals("null") || inputFieldsData.get(itemId).isEmpty() || inputFieldsData.get(itemId).equals("")) {
-                    FacesContext.getCurrentInstance().addMessage("grid:" + itemId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
-                    requiredPresent = false;
-                } else requiredPresent = true;
+        for (Field field : addContractorBean.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            if (!(field.getName().equals("shortContractorName") || field.getName().equals("flatNumber") || field.getName().equals("province"))) {
+                try {
+                    if (field.get(addContractorBean) == null || field.get(addContractorBean).equals("null") || field.get(addContractorBean).equals("")) {
+                        FacesContext.getCurrentInstance().addMessage("grid:" + field.getName(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
+                        requiredPresent = false;
+                    } else requiredPresent = true;
+                } catch (IllegalAccessException e) {
+                    NavigationHandler navigationHandler = FacesContext.getCurrentInstance().getApplication().getNavigationHandler();
+                    navigationHandler.handleNavigation(FacesContext.getCurrentInstance(), null, "../../../../../webapp/error/error.xhtml");
+                    FacesContext.getCurrentInstance().renderResponse();
+                }
             }
         }
+//        for(String itemId : itemsIds) {
+//            //check only fields that are required not to be null
+//            if (!(itemId.equals("shortContractorName") || itemId.equals("flatNumber") || itemId.equals("province"))) {
+//                if (inputFieldsData.get(itemId) == null || inputFieldsData.get(itemId).equals("null") || inputFieldsData.get(itemId).isEmpty() || inputFieldsData.get(itemId).equals("")) {
+//                    FacesContext.getCurrentInstance().addMessage("grid:" + itemId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Pole wymagane!"));
+//                    requiredPresent = false;
+//                } else requiredPresent = true;
+//            }
+//        }
         return requiredPresent;
     }
 
     private boolean validateNip(){
-        String nip = inputFieldsData.get("nip");
+        String nip = addContractorBean.getNip();
         int checksum = 0;
         int[] weigths = {6, 5, 7, 2, 3, 4, 5, 6, 7};
         Pattern nipPattern1 = Pattern.compile("^\\d\\d\\d-\\d\\d-\\d\\d-\\d\\d\\d$");
@@ -168,30 +198,36 @@ public class AddContractorController extends GenericController {
         Matcher matcher2 = nipPattern2.matcher(nip);
         Matcher matcher3 = nipPattern3.matcher(nip);
         if (matcher1.matches() || matcher2.matches() || matcher3.matches()) {
+            nip = nip.replaceAll("-", "");
             for (int i = 0; i < weigths.length; i++) {
-                if (nip.charAt(i) != '-') {
-                    checksum += Integer.parseInt("" + nip.charAt(i)) * weigths[i];
-                }
+                checksum += Integer.parseInt("" + nip.charAt(i)) * weigths[i];
             }
             if (checksum % 11 != Integer.parseInt("" + nip.charAt(nip.length() - 1))) {
-                FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny REGON!"));
+                FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny NIP!"));
                 return false;
             } else return true;
-        }else return false;
+        }else{
+            FacesContext.getCurrentInstance().addMessage("grid:nip", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Błędny NIP!"));
+            return false;
+        }
     }
 
     public void saveContractor(){
-        
-        if(validateRequiredFields()) {
-            validateMail();
-            validateKrs();
-            validateRegon();
-            validateNip();
-        }
-        /*if (validateRequiredFields() && validateMail() && validateRegon() && validateKrs() && validateNip()) {
-            //safe the data
+        boolean areRequiredFieldsFilled = validateRequiredFields();
+        boolean isNipValid = validateNip();
+        boolean isRegonValid = validateRegon();
+        boolean isMailValid = validateMail();
+        boolean isKrsValid = validateKrs();
+        if(areRequiredFieldsFilled && isKrsValid && isNipValid && isRegonValid && isMailValid) {
+            AddContractorBo addContractorBo = new AddContractorBo(addContractorBean.getBankAccountNumber(), addContractorBean.getBankName(),
+                    addContractorBean.getBuildingNumber(), addContractorBean.getCity(), addContractorBean.getCompanyId(),
+                    addContractorBean.getContractorName(), addContractorBean.getEmail(), addContractorBean.getFlatNumber(),
+                    addContractorBean.getKrs(), addContractorBean.getNip(), addContractorBean.getPhoneNumber(),
+                    addContractorBean.getPostCode(), addContractorBean.getProvince(), addContractorBean.getRegon(),
+                    addContractorBean.getRepresentative(), addContractorBean.getShortContractorName(), addContractorBean.getStreet());
 
-        }*/
+            addContractorService.saveContractor(addContractorBo);
+        }
     }
 
 }

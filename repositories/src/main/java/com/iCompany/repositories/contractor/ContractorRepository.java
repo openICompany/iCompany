@@ -1,6 +1,6 @@
-package com.iCompany.contractor;
+package com.iCompany.repositories.contractor;
 
-import com.iCompany.entities.company.Contractor;
+import com.iCompany.entities.contractor.Contractor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,7 @@
 package com.iCompany.entities.company;
 
+import com.iCompany.entities.address.Address;
+import com.iCompany.entities.contractor.Contractor;
 import com.iCompany.entities.user.User;
 
 import javax.persistence.*;

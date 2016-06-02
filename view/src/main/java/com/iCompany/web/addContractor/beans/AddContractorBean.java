@@ -30,7 +30,7 @@ public class AddContractorBean extends GenericBackingBean {
     private String phoneNumber;
     private String email;
     private Map<String, Long> companies;
-    private String company;
+    private Long companyId;
 
 
     public String getContractorName() {
@@ -169,11 +169,11 @@ public class AddContractorBean extends GenericBackingBean {
         this.companies = companies;
     }
 
-    public String getCompany() {
-        return company;
+    public Long getCompanyId() {
+        return companyId;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 }

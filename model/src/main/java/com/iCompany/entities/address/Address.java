@@ -1,4 +1,4 @@
-package com.iCompany.entities.company;
+package com.iCompany.entities.address;
 
 import javax.persistence.*;
 
@@ -31,6 +31,18 @@ public class Address {
 
     @Column(name = "PROVINCE")
     private String province;
+
+    public Address() {
+    }
+
+    public Address(String buildingNumber, String city, String flatNumber, String postCode, String province, String street) {
+        this.buildingNumber = buildingNumber;
+        this.city = city;
+        this.flatNumber = flatNumber;
+        this.postCode = postCode;
+        this.province = province;
+        this.street = street;
+    }
 
 
     public Long getAddressId() {

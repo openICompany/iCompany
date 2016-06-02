@@ -1,4 +1,4 @@
-package com.iCompany.company;
+package com.iCompany.repositories.company;
 
 import com.iCompany.entities.company.Company;
 import com.iCompany.entities.user.User;

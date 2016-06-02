@@ -1,4 +1,7 @@
-package com.iCompany.entities.company;
+package com.iCompany.entities.contractor;
+
+import com.iCompany.entities.address.Address;
+import com.iCompany.entities.company.Company;
 
 import javax.persistence.*;
 
@@ -17,8 +20,8 @@ public class Contractor {
     @Column(name = "CONTRACTOR_NAME")
     private String contractorName;
 
-    @Column(name = "COMPANY_NAME")
-    private String companyName;
+    @Column(name = "SHORT_CONTRACTOR_NAME")
+    private String shortContractorName;
 
     @Column(name = "REGON")
     private String regon;
@@ -52,6 +55,27 @@ public class Contractor {
     @JoinColumn(name = "COMPANY_ID")
     private Company company;
 
+    public Contractor(Address address, String contractorName, String shortContractorName, String regon,
+                      String nip, String krs, String bankName, String bankAccountNumber,
+                      String representative, String phoneNumber, String email, Company company) {
+        this.address = address;
+        this.contractorName = contractorName;
+        this.shortContractorName = shortContractorName;
+        this.regon = regon;
+        this.nip = nip;
+        this.krs = krs;
+        this.bankName = bankName;
+        this.bankAccountNumber = bankAccountNumber;
+        this.representative = representative;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.company = company;
+    }
+
+    public Contractor() {
+
+    }
+
     public Long getContractorId() {
         return contractorId;
     }
@@ -68,12 +92,12 @@ public class Contractor {
         this.contractorName = contractorName;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getShortContractorName() {
+        return shortContractorName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setShortContractorName(String shortContractorName) {
+        this.shortContractorName = shortContractorName;
     }
 
     public String getRegon() {
