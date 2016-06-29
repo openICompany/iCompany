@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface AddContractorService {
     List<Company> getUserCompanies(User user);
-    void saveContractor(AddContractorBo addContractorBo);
+    boolean saveContractor(AddContractorBo addContractorBo);
 }

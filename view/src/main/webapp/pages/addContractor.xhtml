@@ -6,10 +6,11 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/template.xhtml">
 
-    <ui:param name="title" value="Strona główna"/>
+    <ui:param name="title" value="Dodaj kontraktora dla swojej firmy"/>
 
     <ui:define name="content">
-        <h:form id="grid">
+        <h:form id="grid" >
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
             <p:panel header="Wybór firmy dla której ma być dodany nowy kontrahent">
                 <h:panelGrid columns="8" cellpadding="5">
                     <p:outputLabel for="companyId" value="Firma: "/>

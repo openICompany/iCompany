@@ -54,7 +54,6 @@ public class AddContractorController extends GenericController {
         addContractorBean.setCompanies(new HashMap<String, Long>());
         User user; //will be get from Session Service
         //test
-
         user = userRepository.findByUserId(4l);
         List<Company> companies = new ArrayList<Company>(addContractorService.getUserCompanies(user));
         for (Company company : companies) {
@@ -225,8 +224,10 @@ public class AddContractorController extends GenericController {
                     addContractorBean.getKrs(), addContractorBean.getNip(), addContractorBean.getPhoneNumber(),
                     addContractorBean.getPostCode(), addContractorBean.getProvince(), addContractorBean.getRegon(),
                     addContractorBean.getRepresentative(), addContractorBean.getShortContractorName(), addContractorBean.getStreet());
-
-            addContractorService.saveContractor(addContractorBo);
+            if (addContractorService.saveContractor(addContractorBo))
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "OK", "Dodano nowego kontrahenta"));
+            else
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd!", "Nie udało się zapisać kontrahenta" ));
         }
     }
 

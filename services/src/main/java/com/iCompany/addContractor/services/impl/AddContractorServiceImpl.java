@@ -30,7 +30,7 @@ public class AddContractorServiceImpl implements AddContractorService {
     @Autowired
     AddressRepository addressRepository;
 
-    public void saveContractor(AddContractorBo addContractorBo) {
+    public boolean saveContractor(AddContractorBo addContractorBo) {
         Address address = new Address(addContractorBo.getBuildingNumber(), addContractorBo.getCity(), addContractorBo.getFlatNumber(),
                 addContractorBo.getPostCode(), addContractorBo.getProvince(), addContractorBo.getStreet());
         addressRepository.saveAndFlush(address);
@@ -39,7 +39,12 @@ public class AddContractorServiceImpl implements AddContractorService {
                 addContractorBo.getRegon(), addContractorBo.getNip(), addContractorBo.getKrs(),
                 addContractorBo.getBankName(), addContractorBo.getBankAccountNumber(), addContractorBo.getRepresentative(), addContractorBo.getPhoneNumber(),
                 addContractorBo.getEmail(), company);
-        contractorRepository.saveAndFlush(contractor);
+        try {
+            contractorRepository.saveAndFlush(contractor);
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
     }
     public List<Company> getUserCompanies(User user) {
         return companyRepository.findByUser(user);
